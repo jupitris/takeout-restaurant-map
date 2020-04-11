@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="description" content="台東区周辺のテイクアウトできるお店を地図上に公開しています。">
+    <title>台東区周辺のテイクアウト可能なお店マップ</title>
+    <meta property="og:url" content="https://takeoutmap-6fe47.web.app/">
+    <meta property="og:title" content="台東区周辺のテイクアウト可能なお店マップ">
+    <meta property="og:description" content="台東区周辺のテイクアウトできるお店を地図上に公開しています。">
+    <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/takeoutmap-6fe47.appspot.com/o/og_images%2Ftakeaway-logo.png?alt=media&token=d0406e50-09c4-48b4-970d-38b8f99f51e1">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="台東区周辺のテイクアウトできるお店を地図上に公開しています。">
+    <meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/takeoutmap-6fe47.appspot.com/o/og_images%2Ftakeaway-logo.png?alt=media&token=d0406e50-09c4-48b4-970d-38b8f99f51e1">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyCsptW0-mKdg3i9Zix-blrjK809ERFJqVM",
+        authDomain: "takeoutmap-6fe47.firebaseapp.com",
+        databaseURL: "https://takeoutmap-6fe47.firebaseio.com",
+        projectId: "takeoutmap-6fe47",
+        storageBucket: "takeoutmap-6fe47.appspot.com",
+        messagingSenderId: "445449285973",
+        appId: "1:445449285973:web:b164c87ef82d0097387fdc",
+        measurementId: "G-6ENTTFF8BB"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+      /**
+       * Creates a map object with a click listener and a heatmap.
+       */
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 35.713810, lng: 139.786312},
+          zoom: 15,
+          styles: [{
+            featureType: 'poi',
+            stylers: [{ visibility: 'off' }]  // Turn off POI.
+          },
+          {
+            featureType: 'transit.station',
+            stylers: [{ visibility: 'off' }]  // Turn off bus, train stations etc.
+          }],
+          disableDoubleClickZoom: true,
+          streetViewControl: false,
+          fullscreenControl: true
+        });
+
+        renderMarker(map);
+      }
+
+      function renderMarker(map) {
+        const marker = [];
+        const infoWindow = [];
+        const url = location.href;
+
+        $.ajax({
+          type: 'GET',
+          'header': {
+            "Content-type": "application/json; charset=UTF-8"
+          },
+          url: url + '/api/shops',
+          dataType: 'json',
+          success: function(json) {
+            for (let i = 0; json.shops.length > i; i++) {
+              let data = json.shops[i];
+              const latlng = new google.maps.LatLng(Number(data.lat),Number(data.lng));
+              marker[i] = new google.maps.Marker({ // マーカーの追加
+                 position: latlng, // マーカーを立てる位置を指定
+                 map: map // マーカーを立てる地図を指定
+              });
+              var popup = data.name + '<br/>' + data.addr;
+              if (data.phone && data.phone != "null") {
+                  popup += '<br/><a href="tel:' + data.phone + '">' + data.phone + '</a>';
+              }
+              if (data.web && data.web != "null") {
+                  popup += '<br/><a href="'+ data.web + '" target="_blank">' + data.web + '</a>';
+              }
+              infoWindow[i] = new google.maps.InfoWindow({ // 吹き出しの追加
+                  content: popup // 吹き出しに表示する内容
+              });
+              marker[i].addListener('click', function() { // マーカーをクリックしたとき
+                  infoWindow[i].open(map, marker[i]); // 吹き出しの表示
+              });
+            }
+          }
+        });
+      }
+      </script>
+      <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBRyB4hDPw4nk--UDEVKbhKTxJZvfQVsw&libraries=visualization&callback=initMap">
+    </script>
+  </body>
+</html>
+
