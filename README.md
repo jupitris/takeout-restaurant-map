@@ -5,7 +5,7 @@
 台東区周辺のテイクアウト可能なお店を独自に調査したマップになります
 
 ## お店の管理方法
-こちらの[スプレッドシート](https://docs.google.com/spreadsheets/d/17wEI2oBZ94odAKiXm7eeoWpkhA5jdVaZogVxhRYXxaU/edit#gid=0)にてお店の一覧管理をしています。   
+[スプレッドシート](https://docs.google.com/spreadsheets/d/17wEI2oBZ94odAKiXm7eeoWpkhA5jdVaZogVxhRYXxaU/edit#gid=0)にてお店の一覧管理をしています。   
 
 こちらでテイクアウト可能となっている店のみマップに反映がされます。是非とも追加お願いします
 
