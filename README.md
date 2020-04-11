@@ -9,7 +9,7 @@
 
 こちらでテイクアウト可能となっている店のみマップに反映がされます。是非とも追加お願いします
 
-## お店追加方法
+## お店の追加方法
 
 [スプレッドシート](https://docs.google.com/spreadsheets/d/17wEI2oBZ94odAKiXm7eeoWpkhA5jdVaZogVxhRYXxaU/edit#gid=0)に以下の項目の追加をお願いします
 | 項目名 | 必須/任意 | 備考 |
