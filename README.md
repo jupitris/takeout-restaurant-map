@@ -37,7 +37,112 @@
 
 
 ## 台東区以外でも作りたい方向け
-作成方法、コードなどは随時公開をしていきます。
+コードを公開しました。
 是非とも他の地域でもご活用ください。
 
 またコードに対するPullRequestもお待ちしております。
+
+### ディレクトリ構成
+ディレクトリ構成です。  
+`app` はFirebaseプロジェクトになります。動かすのに必要なhostingとfunctionsが含まれています。  
+(※ `.firebaserc` と `.runtimeconfig.json` はリポジトリに含まれていません)  
+
+    .
+    ├── app
+    │   ├── firebase.json
+    │   ├── .firebaserc
+    │   ├── functions
+    │   │   ├── .gitignore
+    │   │   ├── .gitkeep
+    │   │   ├── index.js
+    │   │   ├── node_modules
+    │   │   ├── package.json
+    │   │   ├── package-lock.json
+    │   │   ├── .runtimeconfig.json
+    │   │   └── views
+    │   ├── .gitignore
+    │   ├── .gitkeep
+    │   └── hosting
+    │       ├── 404.html
+    │       ├── favicon.ico
+    │       └── Takeaway.pdf
+    ├── .gitignore
+    ├── LICENSE
+    ├── logo
+    │   └── Takeaway.pdf
+    └── README.md
+
+### 事前準備
+
+FirebaseのHostingプロジェクトを作成しておきましょう。
+
+またプロジェクトで使用するAPIキーを用意しておきます。
+必要なAPIは以下の通りです。
+
+- Maps JavaScript API
+- Geocoding API
+- Google Sheets API
+
+Maps JavaScript API のAPIキーはプロジェクトの性質上、HTMLに表示されてしまうため、特定のリファラー以外は利用できないように制限しておきましょう。
+
+### Cloneしてからデプロイするまで
+
+1. プロジェクトをcloneする  
+
+    ```
+    git clone git@github.com:jupitris/takeout-restaurant-map.git
+    ```
+
+1. プロジェクトディレクトリに移動する  
+
+    ```
+    cd takeout-restaurant-map
+    ```
+
+1. `.firebaserc` を作る  
+
+    ```
+    cat << EOS > app/.firebaserc
+    {
+      "projects": {
+        "default": "YOUR_PROJECT_ID"
+      }
+    }
+    EOS
+    ```
+
+1. functionsで使用する環境変数を設定する  
+    
+    ```
+    cd app/functions
+    firebase functions:config:set takeoutmap.apikey='YOUR_SHEETS_API_KEY'
+    firebase functions:config:set takeoutmap.sheetid='YOUR_SPREAD_SHEET_ID'
+    firebase functions:config:get
+      ### {
+      ###   "takeoutmap": {
+      ###     "sheetid": "YOUR_SPREAD_SHEET_ID",
+      ###     "apikey": "YOUR_SHEETS_API_KEY"
+      ###   }
+      ### }
+    
+    ## For locally development
+    firebase functions:config:get > .runtimeconfig.json
+    ```
+
+1. Node.jsモジュールをインストールする  
+
+    ```
+    npm install
+    ```
+
+1. ローカルで起動する
+
+    ```
+    firebase serve --only functions,hosting
+    ```
+
+    Open the http://localhost:5001/YOUR_PROJECT_ID/us-central1/app
+
+### その他
+
+ビューのテンプレートファイル( `app/functions/views/index.hbs` )は自由に書き換えてください。
