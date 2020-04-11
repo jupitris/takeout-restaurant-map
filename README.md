@@ -31,6 +31,11 @@
 [スプレッドシート](https://docs.google.com/spreadsheets/d/17wEI2oBZ94odAKiXm7eeoWpkhA5jdVaZogVxhRYXxaU/edit#gid=0)に入力していただいた情報は即時反映されます。
 緯度経度が自動で反映されない場合は住所の入れ方を変更してください。(全角スペースが入っている、改行があるなどで自動取得出来ない場合があります)
 
+
+## テイクアウト出来るお店のチラシなどに使えるデザインも公開しています
+[![テイクアウトデザイン](https://user-images.githubusercontent.com/6129513/79034692-29fdf500-7bf3-11ea-9a28-07183514f4f6.png)](https://takeoutmap-6fe47.web.app/Takeaway.pdf)
+
+
 ## 台東区以外でも作りたい方向け
 作成方法、コードなどは随時公開をしていきます。
 是非とも他の地域でもご活用ください。
