@@ -53,7 +53,6 @@
     │   ├── .firebaserc
     │   ├── functions
     │   │   ├── .gitignore
-    │   │   ├── .gitkeep
     │   │   ├── index.js
     │   │   ├── node_modules
     │   │   ├── package.json
@@ -61,7 +60,6 @@
     │   │   ├── .runtimeconfig.json
     │   │   └── views
     │   ├── .gitignore
-    │   ├── .gitkeep
     │   └── hosting
     │       ├── 404.html
     │       ├── favicon.ico
