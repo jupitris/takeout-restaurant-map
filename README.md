@@ -146,7 +146,21 @@ Maps JavaScript API のAPIキーはプロジェクトの性質上、HTMLに表�
 
 ### その他
 
-ビューのテンプレートファイル( `app/functions/views/index.hbs` )は自由に書き換えてください。
+ビューのテンプレートファイル( `app/functions/views/index.hbs` )は自由に書き換えてください。  
+以下のFirebaseに関する設定は、ご自身のHostingアプリ用の設定に変更する必要があります。
+
+```
+var firebaseConfig = {
+  apiKey: "AIzaSyCsptW0-mKdg3i9Zix-blrjK809ERFJqVM",
+  authDomain: "takeoutmap-6fe47.firebaseapp.com",
+  databaseURL: "https://takeoutmap-6fe47.firebaseio.com",
+  projectId: "takeoutmap-6fe47",
+  storageBucket: "takeoutmap-6fe47.appspot.com",
+  messagingSenderId: "445449285973",
+  appId: "1:445449285973:web:b164c87ef82d0097387fdc",
+  measurementId: "G-6ENTTFF8BB"
+};
+```
 
 ### 初期データの作り方
 
@@ -157,7 +171,8 @@ Maps JavaScript API のAPIキーはプロジェクトの性質上、HTMLに表�
 bash scripts/search-restaurant.sh '35.6197,139.728553'
 ```
 
-上記を実行すると、品川駅付近の飲食店を取得できます。`takeaway` 列はスプレッドシートに貼り付けたあとはチェックボックスに置き換えてください。
+上記を実行すると、品川駅付近の飲食店を取得できます。Places APIのtypeパラメーターを変える(またはカンマ区切りで追加する)ことで、他の業種なども取得できます。設定できる項目は [Place Types](https://developers.google.com/places/web-service/supported_types) を参照してください。  
+`takeaway` 列はスプレッドシートに貼り付けたあとはチェックボックスに置き換えてください。
 
 ```
 "name","address","takeaway","phone","lat","lng","url"
