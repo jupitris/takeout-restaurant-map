@@ -1,1 +1,1 @@
-# takeout-restaurant-map
+# 台東区周辺のテイクアウト可能なお店マップ
