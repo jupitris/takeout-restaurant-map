@@ -24,7 +24,7 @@ app.get('/api/shops', async (request, response) => {
 async function getSheetData() {
   const params = {
     spreadsheetId: SHEET_ID,
-    range: 'shops!A2:G1001'
+    range: 'shops!A2:G2000'
   };
   const sheets = google.sheets({version: 'v4', auth: API_KEY});
   const response = await new Promise((resolve, reject) => {
