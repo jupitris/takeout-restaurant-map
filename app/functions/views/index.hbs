@@ -124,14 +124,18 @@
       function renderMarker(map) {
         const marker = [];
         const infoWindow = [];
-        const url = location.href;
+          let url = `${location.protocol}//${location.host}${location.pathname}/api/shops`;
+        if (location.search.length > 1) {
+          url += location.search;
+        }
+        console.log(url);
 
         $.ajax({
           type: 'GET',
           'header': {
             "Content-type": "application/json; charset=UTF-8"
           },
-          url: url + '/api/shops',
+          url: url,
           dataType: 'json',
           success: function(json) {
             for (let i = 0; json.shops.length > i; i++) {
