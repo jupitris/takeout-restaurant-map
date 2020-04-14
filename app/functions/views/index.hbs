@@ -83,6 +83,9 @@
     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
 
     <script>
+      const DEFAULT_LAT = 35.713810;
+      const DEFAULT_LNG = 139.786312;
+      var myMarker;
       // Your web app's Firebase configuration
       var firebaseConfig = {
         apiKey: "AIzaSyCsptW0-mKdg3i9Zix-blrjK809ERFJqVM",
@@ -102,8 +105,9 @@
        * Creates a map object with a click listener and a heatmap.
        */
       function initMap() {
+        const latlng = new google.maps.LatLng(Number(DEFAULT_LAT),Number(DEFAULT_LNG));
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 35.713810, lng: 139.786312},
+          center: latlng,
           zoom: 15,
           styles: [{
             featureType: 'poi',
@@ -118,6 +122,15 @@
           fullscreenControl: true
         });
 
+        map.addListener('dragstart', function() {
+          myMarker.setMap(null);
+        });
+        map.addListener('dragend', function() {
+          const latlng = map.getCenter();
+          renderCurrentMarker(map, latlng.lat(), latlng.lng());
+        });
+
+        renderCurrentMarker(map, DEFAULT_LAT, DEFAULT_LNG);
         renderMarker(map);
       }
 
@@ -163,6 +176,19 @@
                   infoWindow[i].open(map, marker[i]); // 吹き出しの表示
               });
             }
+          }
+        });
+      }
+
+      function renderCurrentMarker(map, lat, lng) {
+        const latlng = new google.maps.LatLng(Number(lat) ,Number(lng));
+        myMarker = new google.maps.Marker({
+          map: map,
+          position: latlng,
+          animation: google.maps.Animation.BOUNCE,
+          icon: {
+              url: 'images/pin.png',
+              scaledSize: new google.maps.Size(22, 28)
           }
         });
       }
